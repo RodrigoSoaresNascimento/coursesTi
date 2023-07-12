@@ -9,7 +9,7 @@ import { delay, first } from 'rxjs';
 })
 export class CoursesTiService {
 
-  private readonly API = 'chamar, minha api';
+  private readonly API = '/cursos/findAll';
 
   constructor(private httpCliente: HttpClient) { }
 
