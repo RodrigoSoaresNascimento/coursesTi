@@ -4,6 +4,7 @@ import { CoursesTiService } from '../services/courses-ti.service';
 import { Observable, catchError, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses-ti',
@@ -17,7 +18,9 @@ export class CoursesTiComponent {
 
   constructor(
     private coursesTiService: CoursesTiService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.coursesTi$ = coursesTiService.findAll().pipe(
       catchError((error) => {
@@ -32,4 +35,10 @@ export class CoursesTiComponent {
       data: errorMesage
     });
   }
+
+  onAdd(){
+    console.log("teste");
+    this.router.navigate(['new'], {relativeTo:this.route});
+  }
+
 }

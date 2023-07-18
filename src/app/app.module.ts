@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CoursesTiFormComponent } from './courses-ti/courses-ti-form/courses-ti-form.component';
 
 @NgModule({
   declarations: [

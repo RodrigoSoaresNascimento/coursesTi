@@ -1,6 +1,9 @@
 <mat-card>
-  <mat-toolbar color="primary">
+  <mat-toolbar class="toolbar-itens" color="primary">
     <span>Cursos de universidades publicas</span>
+    <button mat-fab color="secondary" aria-label="adicionar um curso de tecnologia da informação" (click)=onAdd() >
+      <mat-icon>add</mat-icon>
+    </button>
   </mat-toolbar>
   <div *ngIf="coursesTi$ | async as coursesTi; else loading">
     <table mat-table [dataSource]="coursesTi" class="mat-elevation-z8">
