@@ -3,5 +3,7 @@ export interface CoursesTi {
   courseName: string;
   institution: string;
   modality: string;
+  period: string;
+  city: string;
 
 }

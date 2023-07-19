@@ -3,7 +3,7 @@
     <span>Adicionar um curso de graduação</span>
   </mat-toolbar>
   <mat-card-content>
-    <form [formGroup]="form">
+    <form [formGroup]="form" class="min-width">
       <mat-form-field class="full-width">
         <input matInput placeholder="Nome" formControlName="courseName" />
       </mat-form-field>
@@ -17,12 +17,37 @@
       </mat-form-field>
 
       <mat-form-field class="full-width">
-        <input matInput placeholder="Modalidade" formControlName="modality" />
+        <input
+          matInput
+          placeholder="Cidade"
+          formControlName="city"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Modalidade</mat-label>
+        <mat-select formControlName="modality">
+          <mat-option>Clear</mat-option>
+          <mat-option value="PRESENCIAL">Presencial</mat-option>
+          <mat-option value="A_DISTANCIA">A distancia</mat-option>
+          <mat-option value="HIBRIDO">Hibrido</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Turno</mat-label>
+        <mat-select formControlName="period">
+          <mat-option>Clear</mat-option>
+          <mat-option value="Matutino">Matutino</mat-option>
+          <mat-option value="Vespertino">Vespertino</mat-option>
+          <mat-option value="Integral">Integral</mat-option>
+          <mat-option value="Noturno">Noturno</mat-option>
+        </mat-select>
       </mat-form-field>
     </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-flat-button color="primary">Adicionar</button>
-    <button mat-flat-button color="primary">Limpar</button>
+    <button mat-flat-button color="primary" (click)="onSubmit()">Adicionar</button>
+    <button mat-flat-button color="primary" (click)="onCancel()">Limpar</button>
   </mat-card-actions>
 </mat-card>

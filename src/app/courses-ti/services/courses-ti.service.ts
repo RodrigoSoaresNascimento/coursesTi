@@ -9,15 +9,21 @@ import { delay, first } from 'rxjs';
 })
 export class CoursesTiService {
 
-  private readonly API = '/cursos/findAll';
+  private API = '/cursos';
 
   constructor(private httpCliente: HttpClient) { }
 
   findAll() {
-    return this.httpCliente.get<CoursesTi[]>(this.API)
+    return this.httpCliente.get<CoursesTi[]>(`${this.API}/findAll`)
     .pipe(
       first(),
       delay(5000)
     );
+  }
+
+  save(course: CoursesTi){
+    console.log('save');
+    return this.httpCliente.post<CoursesTi>(`${this.API}/add`, course)
+    .pipe(first());
   }
 }
