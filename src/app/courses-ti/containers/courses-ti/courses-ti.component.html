@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-toolbar class="toolbar-itens" color="primary">
+    <span>Cursos de universidades publicas</span>
+    <button
+      mat-fab
+      color="secondary"
+      aria-label="adicionar um curso de tecnologia da informação"
+      (click)="onAdd()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="column-flex mat-elevation-z8">
+    <app-courses-ti-list
+      *ngIf="coursesTi$ | async as coursesTi; else loading"
+      [coursesTi]="coursesTi"
+      (add)="onAdd()"
+      (edit)="onEdit($event)"
+    ></app-courses-ti-list>
+
+    <ng-template #loading>
+      <div class="loading-spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+    </ng-template>
+  </div>
+</mat-card>

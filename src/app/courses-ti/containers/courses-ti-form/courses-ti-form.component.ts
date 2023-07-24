@@ -1,9 +1,11 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
-import { CoursesTiService } from '../services/courses-ti.service';
+import { CoursesTiService } from '../../services/courses-ti.service';
+import { CoursesTi } from '../../model/courses-ti';
 
 @Component({
   selector: 'app-courses-ti-form',
@@ -12,21 +14,33 @@ import { CoursesTiService } from '../services/courses-ti.service';
 })
 export class CoursesTiFormComponent {
 
-  form : FormGroup;
+  form = this.formBuilder.group({
+    idCourse: [0],
+    courseName: [''],
+    institution: [''],
+    modality: [''],
+    period: [''],
+    city: ['']
+  });
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: NonNullableFormBuilder,
     private service: CoursesTiService,
     private snackBar: MatSnackBar,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
     ) {
-      this.form = this.formBuilder.group({
-        courseName: [null],
-        institution: [null],
-        modality: [null],
-        period: [null],
-        city: [null]
+
+      const course: CoursesTi = this.route.snapshot.data['courseTi'];
+      this.form.setValue({
+        idCourse: course.idCourse,
+        courseName: course.courseName,
+        institution: course.institution,
+        modality: course.modality,
+        period: course.period,
+        city: course.city
       });
+
   }
 
   onSubmit(){

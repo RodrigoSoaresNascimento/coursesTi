@@ -21,9 +21,14 @@ export class CoursesTiService {
     );
   }
 
-  save(course: CoursesTi){
+  save(course: Partial<CoursesTi>){
     console.log('save');
     return this.httpCliente.post<CoursesTi>(`${this.API}/add`, course)
     .pipe(first());
+  }
+
+  findById(_idCourse: number){
+    console.log(_idCourse);
+    return this.httpCliente.get<CoursesTi>(`${this.API}/find-by-id/${_idCourse}`)
   }
 }

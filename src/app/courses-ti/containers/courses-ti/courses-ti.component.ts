@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CoursesTi } from 'src/app/courses-ti/model/courses-ti';
-import { CoursesTiService } from '../services/courses-ti.service';
+import { CoursesTiService } from '../../services/courses-ti.service';
 import { Observable, catchError, of } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
@@ -13,8 +13,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class CoursesTiComponent {
   coursesTi$: Observable<CoursesTi[]>;
-
-  displayedColumns = ['name', 'institution', 'modality', 'city'];
 
   constructor(
     private coursesTiService: CoursesTiService,
@@ -39,6 +37,11 @@ export class CoursesTiComponent {
   onAdd(){
     console.log("teste");
     this.router.navigate(['new'], {relativeTo:this.route});
+  }
+
+  onEdit(courseTi: CoursesTi){
+    console.log(courseTi)
+    this.router.navigate(['edit', courseTi.idCourse], {relativeTo:this.route});
   }
 
 }

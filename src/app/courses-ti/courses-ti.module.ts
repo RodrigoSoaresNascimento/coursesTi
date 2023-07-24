@@ -5,15 +5,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { CoursesTiRoutingModule } from './courses-ti-routing.module';
-import { CoursesTiComponent } from './courses-ti/courses-ti.component';
-import { CoursesTiFormComponent } from './courses-ti-form/courses-ti-form.component';
+import { CoursesTiComponent } from './containers/courses-ti/courses-ti.component';
+import { CoursesTiFormComponent } from './containers/courses-ti-form/courses-ti-form.component';
+import { CoursesTiListComponent } from './components/courses-ti-list/courses-ti-list.component';
 
 
 
 @NgModule({
   declarations: [
     CoursesTiComponent,
-    CoursesTiFormComponent
+    CoursesTiFormComponent,
+    CoursesTiListComponent
   ],
   imports: [
     CommonModule,
