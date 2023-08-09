@@ -65,9 +65,17 @@
         color="primary"
         aria-label="Editar Curso"
         (click)="onEdit(coursesTi)"
-        
       >
         <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-flat-button
+        color="warn"
+        aria-label="Deletar Curso"
+        (click)="onDelete(coursesTi)"
+      >
+        <mat-icon>delete</mat-icon>
       </button>
     </mat-cell>
   </ng-container>

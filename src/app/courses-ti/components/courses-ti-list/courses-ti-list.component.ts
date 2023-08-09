@@ -12,6 +12,7 @@ export class CoursesTiListComponent {
   @Input() coursesTi: CoursesTi[] = [];
   @Output() add = new EventEmitter(false);
   @Output() edit = new EventEmitter(false);
+  @Output() delete = new EventEmitter(false);
 
   readonly displayedColumns = ['name', 'institution', 'modality', 'city', 'actions'];
 
@@ -25,6 +26,10 @@ export class CoursesTiListComponent {
 
   onEdit(coursesTi: CoursesTi){
     this.edit.emit(coursesTi);
+  }
+
+  onDelete(coursesTi: CoursesTi){
+    this.delete.emit(coursesTi)
   }
 
 }
