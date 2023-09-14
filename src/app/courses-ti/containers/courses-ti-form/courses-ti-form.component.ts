@@ -1,6 +1,7 @@
+import { SubjectComputing } from './../../model/subject-computing';
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,14 +15,7 @@ import { CoursesTi } from '../../model/courses-ti';
 })
 export class CoursesTiFormComponent {
 
-  form = this.formBuilder.group({
-    idCourse: [0],
-    courseName: [''],
-    institution: [''],
-    modality: [''],
-    period: [''],
-    city: ['']
-  });
+  form!: FormGroup;
 
   constructor(
     private formBuilder: NonNullableFormBuilder,
@@ -32,15 +26,34 @@ export class CoursesTiFormComponent {
     ) {
 
       const course: CoursesTi = this.route.snapshot.data['courseTi'];
-      this.form.setValue({
-        idCourse: course.idCourse,
-        courseName: course.courseName,
-        institution: course.institution,
-        modality: course.modality,
-        period: course.period,
-        city: course.city
+      this.form = this.formBuilder.group({
+        idCourse: [course.idCourse],
+        courseName: [course.courseName, [Validators.required, Validators.minLength(5), Validators.maxLength(250)]],
+        institution: [course.institution, [Validators.required, Validators.minLength(3), Validators.maxLength(250)]],
+        modality: [course.modality, Validators.required],
+        period: [course.period,  Validators.required],
+        city: [course.period,  Validators.required],
+        subjectsComputing: this.formBuilder.array(this.getSubjectsComputing(course))
       });
+  }
 
+  private getSubjectsComputing(course: CoursesTi){
+    const subjectsComputing = [];
+    if(course?.componentComputingDTOSet){
+      course.componentComputingDTOSet.forEach( subjectComputing => subjectsComputing.push(this.createSubjectComputing(subjectComputing)));
+    }else{
+      subjectsComputing.push(this.createSubjectComputing());
+    }
+    return subjectsComputing;
+  }
+
+  private createSubjectComputing(SubjectComputing: SubjectComputing = {idCourse: 0, courseName: '', classHours: 0, syllabus: ''}){
+    return this.formBuilder.group({
+      idCourse: [SubjectComputing.idCourse],
+      courseName: [SubjectComputing.courseName],
+      classHours: [SubjectComputing.classHours],
+      syllabus: [SubjectComputing.syllabus]
+    })
   }
 
   onSubmit(){
@@ -66,6 +79,27 @@ export class CoursesTiFormComponent {
   private onSucess(){
     this.snackBar.open("Curso salvo com sucesso!", '', {duration : 5000});
     this.onCancel();
+  }
+
+  getErrorMessage(fieldName: string){
+    const field = this.form.get(fieldName);
+
+    if(field?.hasError('required')){
+      return 'Este campo não pode ser vazio';
+    }
+
+    if(field?.hasError('minlength')){
+      const requiredLength: number = field.errors ? field.errors['minlength']['requiredLength'] : 5;
+      return `O tamanho mínimo precisa ser de ${requiredLength}`;
+    }
+
+    if(field?.hasError('maxlength')){
+      const requiredLength: number = field.errors ? field.errors['maxlength']['requiredLength'] : 250;
+      return `O tamanho maximo é de ${requiredLength}`;
+    }
+
+    return 'Campo invalido!';
+
   }
 
 }

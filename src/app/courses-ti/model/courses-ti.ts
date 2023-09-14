@@ -1,3 +1,5 @@
+import { SubjectComputing } from "./subject-computing";
+
 export interface CoursesTi {
   idCourse: number;
   courseName: string;
@@ -5,5 +7,6 @@ export interface CoursesTi {
   modality: string;
   period: string;
   city: string;
+  componentComputingDTOSet: SubjectComputing[];
 
 }

@@ -11,5 +11,5 @@ export const coursesTiResolver: ResolveFn<CoursesTi> = (route : ActivatedRouteSn
     return inject(CoursesTiService).findById(route.params['_idCourse']);
   }
 
-  return ({idCourse: 0, courseName: '', institution: '', modality: '', period: '', city: '' }) ;
+  return ({idCourse: 0, courseName: '', institution: '', modality: '', period: '', city: '', componentComputingDTOSet: [] }) ;
 };
