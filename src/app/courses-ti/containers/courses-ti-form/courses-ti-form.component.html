@@ -7,7 +7,7 @@
       <mat-form-field class="full-width">
         <input matInput placeholder="Nome" formControlName="courseName" #courseName />
         <mat-hint align="end">{{courseName.value.length}}/250</mat-hint>
-        <mat-error *ngIf="form.get('courseName')?.invalid">{{getErrorMessage("courseName")}}</mat-error>
+        <mat-error *ngIf="form.get('courseName')?.invalid">{{formUtils.getErrorMessage(form,"courseName")}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -18,7 +18,7 @@
           #institution
         />
         <mat-hint align="end">{{institution.value.length}}/250</mat-hint>
-        <mat-error *ngIf="form.get('institution')?.invalid">{{getErrorMessage("institution")}}</mat-error>
+        <mat-error *ngIf="form.get('institution')?.invalid">{{formUtils.getErrorMessage(form,"institution")}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -27,7 +27,7 @@
           placeholder="Cidade"
           formControlName="city"
         />
-        <mat-error *ngIf="form.get('city')?.invalid">{{getErrorMessage("city")}}</mat-error>
+        <mat-error *ngIf="form.get('city')?.invalid">{{formUtils.getErrorMessage(form,"city")}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -38,7 +38,7 @@
           <mat-option value="A_DISTANCIA">A distancia</mat-option>
           <mat-option value="HIBRIDO">Hibrido</mat-option>
         </mat-select>
-        <mat-error *ngIf="form.get('modality')?.invalid">{{getErrorMessage("modality")}}</mat-error>
+        <mat-error *ngIf="form.get('modality')?.invalid">{{formUtils.getErrorMessage(form,"modality")}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="full-width">
@@ -50,8 +50,45 @@
           <mat-option value="INTEGRAL">Integral</mat-option>
           <mat-option value="NORTUNO">Noturno</mat-option>
         </mat-select>
-        <mat-error *ngIf="form.get('period')?.invalid">{{getErrorMessage("period")}}</mat-error>
+        <mat-error *ngIf="form.get('period')?.invalid">{{formUtils.getErrorMessage(form,"period")}}</mat-error>
       </mat-form-field>
+
+      <mat-toolbar>
+        <span>
+          Cadeiras de computação
+        </span>
+        <button mat-icon-button color="accent" (click)="addNewSubjectsComputing()">
+          <mat-icon aria-label="botão de adicionar uma nova cadeira de computação">add</mat-icon>
+        </button>
+      </mat-toolbar>
+
+      <mat-error *ngIf="formUtils.isFormArrayValid(form, 'subjectsComputing')" class="form-array-error">Adicone no minimo uma cadeira</mat-error>
+
+      <table style="width: 100%" formArrayName="subjectsComputing"
+      *ngFor="let subjectComputing of getSubjectsComputingFormArray(); let i = index">
+        <tr [formGroupName]="i">
+          <td style="width: 65%">
+            <mat-form-field class="full-width">
+              <mat-label>Nome do componente</mat-label>
+              <input matInput placeholder="Nome" formControlName="courseName"  />
+              <mat-error *ngIf="getSubjectsComputingFormArray()[i].get('courseName')?.invalid">{{formUtils.getFormArrayFieldErrorMenssage(form, 'subjectsComputing', 'courseName', i)}}</mat-error>
+            </mat-form-field>
+          </td>
+          <td style="width: 30%">
+            <mat-form-field class="full-width">
+              <mat-label>Horas totais do componente</mat-label>
+              <input matInput placeholder="Carga horaria total" formControlName="classHours"  />
+              <mat-error *ngIf="getSubjectsComputingFormArray()[i].get('classHours')?.invalid">{{formUtils.getFormArrayFieldErrorMenssage(form, 'subjectsComputing', 'classHours', i)}}</mat-error>
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-icon-button color="warning" (click)="removeSubjectsComputing(i)">
+              <mat-icon aria-label="Remover uma cadeira de computação">delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </table>
+
     </form>
   </mat-card-content>
   <mat-card-actions>
