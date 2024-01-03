@@ -32,8 +32,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Modalidade</mat-label>
-        <mat-select formControlName="modality">
-          <mat-option>Clear</mat-option>
+        <mat-select formControlName="modality" name="modality">
           <mat-option value="PRESENCIAL">Presencial</mat-option>
           <mat-option value="A_DISTANCIA">A distancia</mat-option>
           <mat-option value="HIBRIDO">Hibrido</mat-option>
@@ -43,8 +42,7 @@
 
       <mat-form-field class="full-width">
         <mat-label>Turno</mat-label>
-        <mat-select formControlName="period">
-          <mat-option>Clear</mat-option>
+        <mat-select formControlName="period" name="Period">
           <mat-option value="MATUTINO">Matutino</mat-option>
           <mat-option value="VESPERTINO">Vespertino</mat-option>
           <mat-option value="INTEGRAL">Integral</mat-option>
@@ -62,23 +60,30 @@
         </button>
       </mat-toolbar>
 
-      <mat-error *ngIf="formUtils.isFormArrayValid(form, 'subjectsComputing')" class="form-array-error">Adicone no minimo uma cadeira</mat-error>
+      <mat-error *ngIf="formUtils.isFormArrayValid(form, 'componentComputingDTOSet')" class="form-array-error">Adicone no minimo uma cadeira</mat-error>
 
-      <table style="width: 100%" formArrayName="subjectsComputing"
-      *ngFor="let subjectComputing of getSubjectsComputingFormArray(); let i = index">
+      <table style="width: 100%" formArrayName="componentComputingDTOSet"
+      *ngFor="let componentComputingDTOSet of getSubjectsComputingFormArray(); let i = index">
         <tr [formGroupName]="i">
-          <td style="width: 65%">
+          <td style="width: 30%">
             <mat-form-field class="full-width">
               <mat-label>Nome do componente</mat-label>
               <input matInput placeholder="Nome" formControlName="courseName"  />
-              <mat-error *ngIf="getSubjectsComputingFormArray()[i].get('courseName')?.invalid">{{formUtils.getFormArrayFieldErrorMenssage(form, 'subjectsComputing', 'courseName', i)}}</mat-error>
+              <mat-error *ngIf="getSubjectsComputingFormArray()[i].get('courseName')?.invalid">{{formUtils.getFormArrayFieldErrorMenssage(form, 'componentComputingDTOSet', 'courseName', i)}}</mat-error>
             </mat-form-field>
           </td>
           <td style="width: 30%">
             <mat-form-field class="full-width">
               <mat-label>Horas totais do componente</mat-label>
               <input matInput placeholder="Carga horaria total" formControlName="classHours"  />
-              <mat-error *ngIf="getSubjectsComputingFormArray()[i].get('classHours')?.invalid">{{formUtils.getFormArrayFieldErrorMenssage(form, 'subjectsComputing', 'classHours', i)}}</mat-error>
+              <mat-error *ngIf="getSubjectsComputingFormArray()[i].get('classHours')?.invalid">{{formUtils.getFormArrayFieldErrorMenssage(form, 'componentComputingDTOSet', 'classHours', i)}}</mat-error>
+            </mat-form-field>
+          </td>
+          <td style="width: 45%">
+            <mat-form-field class="full-width">
+              <mat-label>Ementa do componente</mat-label>
+              <input matInput placeholder="ementa da disciplina" formControlName="syllabus"  />
+              <mat-error *ngIf="getSubjectsComputingFormArray()[i].get('syllabus')?.invalid">{{formUtils.getFormArrayFieldErrorMenssage(form, 'componentComputingDTOSet', 'syllabus', i)}}</mat-error>
             </mat-form-field>
           </td>
           <td>

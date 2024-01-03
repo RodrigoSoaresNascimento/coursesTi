@@ -49,6 +49,8 @@ export class FormUtilsService {
         : 250;
       return `O tamanho maximo é de ${requiredLength}`;
     }
+
+    return 'Campo invalido';
   }
 
   getFormArrayFieldErrorMenssage (FormGroup: UntypedFormGroup, formArrayName: string, fieldName: string, index: number){

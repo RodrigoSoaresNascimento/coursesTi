@@ -9,12 +9,15 @@ import { CoursesTiService } from '../../services/courses-ti.service';
 import { SubjectComputing } from './../../model/subject-computing';
 import { FormUtilsService } from 'src/app/shared/form/form-utils.service';
 
+
 @Component({
   selector: 'app-courses-ti-form',
   templateUrl: './courses-ti-form.component.html',
   styleUrls: ['./courses-ti-form.component.scss'],
 })
 export class CoursesTiFormComponent {
+
+
   form!: FormGroup;
 
   constructor(
@@ -46,25 +49,25 @@ export class CoursesTiFormComponent {
       ],
       modality: [course.modality, Validators.required],
       period: [course.period, Validators.required],
-      city: [course.period, Validators.required],
-      subjectsComputing: this.formBuilder.array(this.getSubjectsComputing(course), Validators.required)
+      city: [course.city, Validators.required],
+      componentComputingDTOSet: this.formBuilder.array(this.getSubjectsComputing(course), Validators.required)
     });
   }
 
   private getSubjectsComputing(course: CoursesTi) {
-    const subjectsComputing = [];
+    const componentComputingDTOSet = [];
     if (course?.componentComputingDTOSet) {
       course.componentComputingDTOSet.forEach((subjectComputing) =>
-        subjectsComputing.push(this.createSubjectComputing(subjectComputing))
+      componentComputingDTOSet.push(this.createSubjectComputing(subjectComputing))
       );
     } else {
-      subjectsComputing.push(this.createSubjectComputing());
+      componentComputingDTOSet.push(this.createSubjectComputing());
     }
-    return subjectsComputing;
+    return componentComputingDTOSet;
   }
 
   private createSubjectComputing(
-    SubjectComputing: SubjectComputing = {
+    componentComputingDTOSet: SubjectComputing = {
       idCourse: 0,
       courseName: '',
       classHours: 0,
@@ -72,9 +75,9 @@ export class CoursesTiFormComponent {
     }
   ) {
     return this.formBuilder.group({
-      idCourse: [SubjectComputing.idCourse],
+      idCourse: [componentComputingDTOSet.idCourse],
       courseName: [
-        SubjectComputing.courseName,
+        componentComputingDTOSet.courseName,
         [
           Validators.required,
           Validators.minLength(5),
@@ -82,11 +85,11 @@ export class CoursesTiFormComponent {
         ],
       ],
       classHours: [
-        SubjectComputing.classHours,
+        componentComputingDTOSet.classHours,
         [Validators.required, Validators.minLength(1), Validators.maxLength(3)],
       ],
       syllabus: [
-        SubjectComputing.syllabus,
+        componentComputingDTOSet.syllabus,
         [
           Validators.required,
           Validators.minLength(5),
@@ -97,26 +100,30 @@ export class CoursesTiFormComponent {
   }
 
   getSubjectsComputingFormArray() {
-    return (<UntypedFormArray>this.form.get('subjectsComputing')).controls;
+    return (<UntypedFormArray>this.form.get('componentComputingDTOSet')).controls;
   }
 
   addNewSubjectsComputing() {
 
-    const subjectsComputing = this.form.get('subjectsComputing') as UntypedFormArray;
-    subjectsComputing.push(this.createSubjectComputing());
+    const componentComputingDTOSet = this.form.get('componentComputingDTOSet') as UntypedFormArray;
+    componentComputingDTOSet.push(this.createSubjectComputing());
 
   }
 
   removeSubjectsComputing(index: number) {
     const subjectsComputing = this.form.get(
-      'subjectsComputing'
+      'componentComputingDTOSet'
     ) as UntypedFormArray;
     subjectsComputing.removeAt(index);
   }
 
   onSubmit() {
+    const modality = this.form.get('modality')?.value;
+    const period = this.form.get('period')?.value;
+
     if (this.form.valid) {
-      this.service.save(this.form.value).subscribe({
+      console.log(this.form);
+      this.service.save(this.form.value, period, modality).subscribe({
         next: () => {
           this.onSucess();
         },
